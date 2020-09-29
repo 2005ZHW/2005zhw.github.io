@@ -6,11 +6,11 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://2005zhw.github.io">
-  <title>Zhang Hengwei&#39;s Blog</title>
+  <title>Archives: 2020/9 | Zhang Hengwei&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
 <meta property="og:title" content="Zhang Hengwei&#39;s Blog">
-<meta property="og:url" content="http://2005zhw.github.io/index.html">
+<meta property="og:url" content="http://2005zhw.github.io/archives/2020/09/index.html">
 <meta property="og:site_name" content="Zhang Hengwei&#39;s Blog">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="Zhang Hengwei">
@@ -152,286 +152,47 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-High-Accuracy-Algorithm" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
+  
     
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/26/High-Accuracy-Algorithm/">高精度算法(High Accuracy Algorithm)</a>
-    </h1>
-  
-
-        
-        <a href="/2020/09/26/High-Accuracy-Algorithm/" class="archive-article-date">
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2020" class="archive-year">2020</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2020/09/26/High-Accuracy-Algorithm/" class="archive-article-date">
   	<time datetime="2020-09-26T11:03:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-26</time>
 </a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="0-前言"><a href="#0-前言" class="headerlink" title="0 前言"></a>0 前言</h3><p><del>作为一个没学基础的蒟蒻,高精打一个下午加一个早上应该不是什么大事吧</del></p>
-<h3 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1 介绍"></a>1 介绍</h3><p>众所周知，C++的整形变量<code>int</code>仅能存储$ -2^{31} $ 到 $ 2^{31} - 1 $之间的整数，<code>long long</code>也只能存储储$ -2^{31} $ 到 $ 2^{31} - 1 $之间的整数，如果遇到超过这些C++整形变量范围的数字及运算，就得用到<del><code>__int128</code></del>高精度算法了。</p>
-<h3 id="2-原理"><a href="#2-原理" class="headerlink" title="2 原理"></a>2 原理</h3><p>首先，让我们回想一下小学时代教的竖式，高精度算法实质上就是对加乘竖式的模拟<del>(不要问我减法除法去那里了，我太菜了还不会)</del>。</p>
-<p>当然，一位一位的存储不仅浪费空间，也会拖慢运行时间，所以我们就需要用到<strong>压位</strong>的技巧，所谓压位，其实就是一次存储多位数字，事实证明，压位可以让1000位以上的高精度数字跑得飞快。</p>
-<p>其实高精度算法就是个类似<code>int</code>、<code>long long</code>之类的模板，记住就好了。</p>
-<h3 id="3-代码实现"><a href="#3-代码实现" class="headerlink" title="3 代码实现"></a>3 代码实现</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> LEN = <span class="number">150</span>;                                            <span class="comment">// 总位数 / 压位位数</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> BASEL = <span class="number">5</span>;                                            <span class="comment">// 压位位数</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">long</span> <span class="keyword">long</span> BASE = <span class="number">1e5</span>;                                     <span class="comment">// 压位取模</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">BigNumber</span> &#123;</span>                                              <span class="comment">// 写在结构体内，方便函数重载</span></span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> data[LEN];</span><br><span class="line">    BigNumber() &#123;</span><br><span class="line">        <span class="built_in">memset</span>(data, <span class="number">0</span>, <span class="keyword">sizeof</span>(data));                          <span class="comment">// 这行千万不能丢</span></span><br><span class="line">        data[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">void</span> <span class="keyword">operator</span> = (<span class="keyword">long</span> <span class="keyword">long</span> val) &#123;</span><br><span class="line">        data[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (val) &#123;</span><br><span class="line">            data[data[<span class="number">0</span>]++] = val % BASE;</span><br><span class="line">            val /= BASE;</span><br><span class="line">        &#125;</span><br><span class="line">        data[<span class="number">0</span>]--;</span><br><span class="line">    &#125;</span><br><span class="line">    BigNumber <span class="keyword">operator</span> + (<span class="keyword">const</span> BigNumber &amp; val) <span class="keyword">const</span> &#123;</span><br><span class="line">        BigNumber res;</span><br><span class="line">        res.data[<span class="number">0</span>] = max(data[<span class="number">0</span>], val.data[<span class="number">0</span>]);</span><br><span class="line">        <span class="keyword">long</span> <span class="keyword">long</span> c = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= res.data[<span class="number">0</span>]; i++) &#123;</span><br><span class="line">            res.data[i] = data[i] + val.data[i] + c;</span><br><span class="line">            c = res.data[i] / BASE;</span><br><span class="line">            res.data[i] %= BASE;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (c &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            res.data[++res.data[<span class="number">0</span>]] = c;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    BigNumber <span class="keyword">operator</span> * (<span class="keyword">const</span> BigNumber &amp; val) <span class="keyword">const</span> &#123;</span><br><span class="line">        BigNumber res;</span><br><span class="line">        res = <span class="number">0</span>;</span><br><span class="line">        res.data[<span class="number">0</span>] = data[<span class="number">0</span>] + val.data[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= data[<span class="number">0</span>]; i++) &#123;</span><br><span class="line">            <span class="keyword">long</span> <span class="keyword">long</span> c = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= val.data[<span class="number">0</span>]; j++) &#123;</span><br><span class="line">                res.data[i + j - <span class="number">1</span>] += data[i] * val.data[j] + c;</span><br><span class="line">                c = res.data[i + j - <span class="number">1</span>] / BASE;</span><br><span class="line">                res.data[i + j - <span class="number">1</span>] %= BASE;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (c &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                res.data[i + val.data[<span class="number">0</span>]] = c;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (res.data[res.data[<span class="number">0</span>]] == <span class="number">0</span> &amp;&amp; res.data[<span class="number">0</span>] &gt; <span class="number">1</span>) &#123;</span><br><span class="line">            res.data[<span class="number">0</span>]--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">read</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">char</span> str[LEN];</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, str);</span><br><span class="line">        <span class="keyword">int</span> len = <span class="built_in">strlen</span>(str);</span><br><span class="line">        reverse(str, str + len);</span><br><span class="line">        data[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">1</span>; i &lt; len; i++, j *= <span class="number">10</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i % BASEL == <span class="number">0</span>) &#123;</span><br><span class="line">                j = <span class="number">1</span>;</span><br><span class="line">                data[<span class="number">0</span>]++;</span><br><span class="line">                data[data[<span class="number">0</span>]] = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            data[data[<span class="number">0</span>]] = data[data[<span class="number">0</span>]] + (str[i] - <span class="string">&#x27;0&#x27;</span>) * j;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">write</span><span class="params">(<span class="keyword">char</span> end)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%lld&quot;</span>, data[data[<span class="number">0</span>]]);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = data[<span class="number">0</span>] - <span class="number">1</span>; i &gt;= <span class="number">1</span>; i--) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%05lld&quot;</span>, data[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">putchar</span>(end);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">BigNumber <span class="title">max</span><span class="params">(BigNumber x, BigNumber y)</span> </span>&#123;                        <span class="comment">// 重载max函数</span></span><br><span class="line">    <span class="keyword">if</span> (x.data[<span class="number">0</span>] &gt; y.data[<span class="number">0</span>]) &#123;</span><br><span class="line">        <span class="keyword">return</span> x;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (y.data[<span class="number">0</span>] &gt; x.data[<span class="number">0</span>]) &#123;</span><br><span class="line">        <span class="keyword">return</span> y;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = x.data[<span class="number">0</span>]; i; i--) &#123;</span><br><span class="line">        <span class="keyword">if</span> (x.data[i] &gt; y.data[i]) &#123;</span><br><span class="line">            <span class="keyword">return</span> x;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (x.data[i] &lt; y.data[i]) &#123;</span><br><span class="line">            <span class="keyword">return</span> y;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">BigNumber a, b, c, d;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    a.read();                                                    <span class="comment">// 可以直接读入</span></span><br><span class="line">    b = <span class="number">1000L</span>L;                                                  <span class="comment">// 也可以直接赋值</span></span><br><span class="line">    c = a + b;                                                   <span class="comment">// 加法运算</span></span><br><span class="line">    d = a * b;                                                   <span class="comment">// 乘法运算</span></span><br><span class="line">    c.write(<span class="string">&#x27;\n&#x27;</span>);                                               <span class="comment">// 输出和</span></span><br><span class="line">    d.write(<span class="string">&#x27;\n&#x27;</span>);                                               <span class="comment">// 输出积</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/09/26/High-Accuracy-Algorithm/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
         </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Build-Your-Blog" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+    	 
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/08/13/Build-Your-Blog/">Build Your Blog</a>
+      <a class="archive-article-title" href="/2020/09/26/High-Accuracy-Algorithm/">高精度算法(High Accuracy Algorithm)</a>
     </h1>
   
 
-        
-        <a href="/2020/08/13/Build-Your-Blog/" class="archive-article-date">
-  	<time datetime="2020-08-13T04:57:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="0-前言"><a href="#0-前言" class="headerlink" title="0 前言"></a>0 前言</h3><p>建这个博客踩了好多坑QWQ</p>
-<h3 id="1-安装"><a href="#1-安装" class="headerlink" title="1 安装"></a>1 安装</h3><h4 id="1-1-安装Git和Node-js"><a href="#1-1-安装Git和Node-js" class="headerlink" title="1.1 安装Git和Node.js"></a>1.1 安装Git和Node.js</h4><p>这没什么好说的吧…</p>
-<p>安装完成后打开cmd通过以下两行命令检测是否安装成功</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git --version</span><br><span class="line">npm --version</span><br></pre></td></tr></table></figure>
+        <div class="article-info info-on-right">
+          
+          
 
-<h4 id="1-2-更换国内镜像源"><a href="#1-2-更换国内镜像源" class="headerlink" title="1.2 更换国内镜像源"></a>1.2 更换国内镜像源</h4><p><del>如果您觉得网速够快可以选择跳过此步</del></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
-
-<h4 id="1-3-安装Hexo"><a href="#1-3-安装Hexo" class="headerlink" title="1.3 安装Hexo"></a>1.3 安装Hexo</h4><p>上一步不做的话这一步会慢得让你怀疑人生</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli </span><br></pre></td></tr></table></figure>
-
-<h3 id="2-创建"><a href="#2-创建" class="headerlink" title="2 创建"></a>2 创建</h3><h4 id="2-1-创建本地Blog"><a href="#2-1-创建本地Blog" class="headerlink" title="2.1 创建本地Blog"></a>2.1 创建本地Blog</h4><p>新建一个空文件夹并进入</p>
-<p>右键 -&gt; “Git Bash Here”</p>
-<p>输入以下命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
-
-<h4 id="2-2-进行本地预览"><a href="#2-2-进行本地预览" class="headerlink" title="2.2 进行本地预览"></a>2.2 进行本地预览</h4><p>继续在命令行中输入下列代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-
-<p>之后进入打开浏览器<a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000</a>就可以查看自己的Blog了</p>
-<h3 id="3-美化"><a href="#3-美化" class="headerlink" title="3 美化"></a>3 美化</h3><h4 id="3-1-下载主题"><a href="#3-1-下载主题" class="headerlink" title="3.1 下载主题"></a>3.1 下载主题</h4><h5 id="3-1-1-yilia"><a href="#3-1-1-yilia" class="headerlink" title="3.1.1 yilia"></a>3.1.1 yilia</h5><p>在<a target="_blank" rel="noopener" href="https://github.com/">GitHub</a>中查找<a target="_blank" rel="noopener" href="https://github.com/search?q=hexo-theme&type=">hexo-theme</a></p>
-<p>选择一个自己喜欢的主题并clone或下载zip包解压到<strong>主目录/themes</strong>中</p>
-<h5 id="3-2-1-yilia"><a href="#3-2-1-yilia" class="headerlink" title="3.2.1 yilia"></a>3.2.1 yilia</h5><p>这里以<a target="_blank" rel="noopener" href="https://github.com/litten/hexo-theme-yilia">yilia</a>为例</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/litten/hexo-theme-yilia.git themes/yilia</span><br></pre></td></tr></table></figure>
-
-<h5 id="3-2-2-material"><a href="#3-2-2-material" class="headerlink" title="3.2.2 material"></a>3.2.2 material</h5><blockquote>
-<p>注意:使用Material主题最好用1.5.2版，最新版会一直报错</p>
-</blockquote>
-<p>这里以<a target="_blank" rel="noopener" href="https://github.com/bolnh/hexo-theme-material">Material</a>为例</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> themes</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/viosey/hexo-theme-material.git material</span><br></pre></td></tr></table></figure>
-
-<h4 id="3-2-使用主题"><a href="#3-2-使用主题" class="headerlink" title="3.2 使用主题"></a>3.2 使用主题</h4><h5 id="3-2-1-yilia-1"><a href="#3-2-1-yilia-1" class="headerlink" title="3.2.1 yilia"></a>3.2.1 yilia</h5><p>修改<strong>主目录</strong>下的 <code>_config.yml</code> 文件的 <code>theme</code>值为<code>yilia</code>。</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">yilia</span></span><br></pre></td></tr></table></figure>
-
-<p>复制 <strong>themes/yilia</strong> 目录下<code>_config.template.yml</code> 为 <code>_config.yml</code></p>
-<h5 id="3-2-2-material-1"><a href="#3-2-2-material-1" class="headerlink" title="3.2.2 material"></a>3.2.2 material</h5><p>修改<strong>主目录</strong>下的 <code>_config.yml</code> 文件的 <code>theme</code>值为<code>material</code>。</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">material</span></span><br></pre></td></tr></table></figure>
-
-<p>复制 <strong>themes/material</strong> 目录下<code>_config.template.yml</code> 为 <code>_config.yml</code></p>
-<h4 id="3-3-更改语言"><a href="#3-3-更改语言" class="headerlink" title="3.3 更改语言"></a>3.3 更改语言</h4><p>修改<strong>主目录</strong>下的 <code>_config.yml</code> 文件的 <code>language</code>值为<code>zh-CN</code>。</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">language:</span> <span class="string">zh-CN</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="3-4-站内搜索"><a href="#3-4-站内搜索" class="headerlink" title="3.4 站内搜索"></a>3.4 站内搜索</h4><p>安装 <a target="_blank" rel="noopener" href="https://link.jianshu.com/?t=https://github.com/PaicHyperionDev/hexo-generator-search">hexo-generator-search</a> 插件。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure>
-
-<p>修改<strong>theme/material</strong> 目录 <code>_config.yml</code> 中的 search值</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">search:</span></span><br><span class="line">    <span class="attr">use:</span> <span class="string">local</span></span><br><span class="line">    <span class="attr">swiftype_key:</span> </span><br></pre></td></tr></table></figure>
-
-<p>然后在<strong>主目录</strong>的<code>_config.yml</code>文件中添加</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">search:</span></span><br><span class="line">    <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">    <span class="attr">field:</span> <span class="string">all</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="4-部署"><a href="#4-部署" class="headerlink" title="4 部署"></a>4 部署</h3><p>到前一步本地的博客基本上就建好了，接下来就是将其放在服务器上</p>
-<h4 id="4-1-连接Git仓库"><a href="#4-1-连接Git仓库" class="headerlink" title="4.1 连接Git仓库"></a>4.1 连接Git仓库</h4><p>首先在<a target="_blank" rel="noopener" href="https://github.com/">GitHub</a>注册一个账号,建立<code>用户名.github.io</code>的项目</p>
-<p>接着打开Git Bash，输入下列命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;用户名&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;注册邮箱&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="4-2-添加密钥"><a href="#4-2-添加密钥" class="headerlink" title="4.2 添加密钥"></a>4.2 添加密钥</h4><p>在Git Bash中继续输入下列命令生成SSH密钥</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">&quot;注册邮箱&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>查看密钥</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
-
-<p>将输出的内容复制到<a target="_blank" rel="noopener" href="https://github.com/settings/keys">SSH and GPG keys</a>里</p>
-<h4 id="4-3-提交部署"><a href="#4-3-提交部署" class="headerlink" title="4.3 提交部署"></a>4.3 提交部署</h4><p>安装<code>hexo-deployer-git</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
-
-<p>配置<strong>主目录</strong>的<code>_config.yml</code>文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  <span class="built_in">type</span>: git</span><br><span class="line">  repo: 仓库地址</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-
-<p>部署到<a target="_blank" rel="noopener" href="https://github.com/">GitHub</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-
-<p>访问<a target="_blank" rel="noopener" href="https://用户名.github.io/">https://用户名.github.io/</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/08/13/Build-Your-Blog/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
+  
+    </div></section>
+  
+
     
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/08/13/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2020/08/13/hello-world/" class="archive-article-date">
-  	<time datetime="2020-08-13T04:35:25.471Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/08/13/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-  
 
 
           </div>
@@ -453,9 +214,9 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
+		isHome: false,
 		isPost: false,
-		isArchive: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
