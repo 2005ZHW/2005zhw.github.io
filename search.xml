@@ -38,22 +38,22 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
 
 <p>之后进入打开浏览器<a href="http://localhost:4000/">http://localhost:4000</a>就可以查看自己的Blog了</p>
-<h3 id="3-美化"><a href="#3-美化" class="headerlink" title="3 美化"></a>3 美化</h3><h4 id="3-1-下载主题"><a href="#3-1-下载主题" class="headerlink" title="3.1 下载主题"></a>3.1 下载主题</h4><h5 id="3-1-1-yilia"><a href="#3-1-1-yilia" class="headerlink" title="3.1.1 yilia"></a>3.1.1 yilia</h5><p>在<a href="https://github.com/">GitHub</a>中查找<a href="https://github.com/search?q=hexo-theme&type=">hexo-theme</a></p>
+<h3 id="3-美化"><a href="#3-美化" class="headerlink" title="3 美化"></a>3 美化</h3><h4 id="3-1-下载主题"><a href="#3-1-下载主题" class="headerlink" title="3.1 下载主题"></a>3.1 下载主题</h4><p>在<a href="https://github.com/">GitHub</a>中查找<a href="https://github.com/search?q=hexo-theme&type=">hexo-theme</a></p>
 <p>选择一个自己喜欢的主题并clone或下载zip包解压到<strong>主目录/themes</strong>中</p>
-<h5 id="3-2-1-yilia"><a href="#3-2-1-yilia" class="headerlink" title="3.2.1 yilia"></a>3.2.1 yilia</h5><p>这里以<a href="https://github.com/litten/hexo-theme-yilia">yilia</a>为例</p>
+<h5 id="3-1-1-yilia"><a href="#3-1-1-yilia" class="headerlink" title="3.1.1 yilia"></a>3.1.1 yilia</h5><p>这里以<a href="https://github.com/litten/hexo-theme-yilia">yilia</a>为例</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/litten/hexo-theme-yilia.git themes/yilia</span><br></pre></td></tr></table></figure>
 
-<h5 id="3-2-2-material"><a href="#3-2-2-material" class="headerlink" title="3.2.2 material"></a>3.2.2 material</h5><blockquote>
+<h5 id="3-1-2-material"><a href="#3-1-2-material" class="headerlink" title="3.1.2 material"></a>3.1.2 material</h5><blockquote>
 <p>注意:使用Material主题最好用1.5.2版，最新版会一直报错</p>
 </blockquote>
 <p>这里以<a href="https://github.com/bolnh/hexo-theme-material">Material</a>为例</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> themes</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/viosey/hexo-theme-material.git material</span><br></pre></td></tr></table></figure>
 
-<h4 id="3-2-使用主题"><a href="#3-2-使用主题" class="headerlink" title="3.2 使用主题"></a>3.2 使用主题</h4><h5 id="3-2-1-yilia-1"><a href="#3-2-1-yilia-1" class="headerlink" title="3.2.1 yilia"></a>3.2.1 yilia</h5><p>修改<strong>主目录</strong>下的 <code>_config.yml</code> 文件的 <code>theme</code>值为<code>yilia</code>。</p>
+<h4 id="3-2-使用主题"><a href="#3-2-使用主题" class="headerlink" title="3.2 使用主题"></a>3.2 使用主题</h4><h5 id="3-2-1-yilia"><a href="#3-2-1-yilia" class="headerlink" title="3.2.1 yilia"></a>3.2.1 yilia</h5><p>修改<strong>主目录</strong>下的 <code>_config.yml</code> 文件的 <code>theme</code>值为<code>yilia</code>。</p>
 <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">yilia</span></span><br></pre></td></tr></table></figure>
 
 <p>复制 <strong>themes/yilia</strong> 目录下<code>_config.template.yml</code> 为 <code>_config.yml</code></p>
-<h5 id="3-2-2-material-1"><a href="#3-2-2-material-1" class="headerlink" title="3.2.2 material"></a>3.2.2 material</h5><p>修改<strong>主目录</strong>下的 <code>_config.yml</code> 文件的 <code>theme</code>值为<code>material</code>。</p>
+<h5 id="3-2-2-material"><a href="#3-2-2-material" class="headerlink" title="3.2.2 material"></a>3.2.2 material</h5><p>修改<strong>主目录</strong>下的 <code>_config.yml</code> 文件的 <code>theme</code>值为<code>material</code>。</p>
 <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">theme:</span> <span class="string">material</span></span><br></pre></td></tr></table></figure>
 
 <p>复制 <strong>themes/material</strong> 目录下<code>_config.template.yml</code> 为 <code>_config.yml</code></p>
