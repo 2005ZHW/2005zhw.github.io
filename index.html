@@ -158,13 +158,13 @@
     <div class="widget">
       <h3 class="widget-title">分类</h3>
       <div class="category-box">
-            <a class="category-link" href="/categories/%E9%A2%98%E8%A7%A3/">
-                题解
+            <a class="category-link" href="/categories/%E7%AE%97%E6%B3%95/">
+                算法
                 <div class="category-count">1</div>
             </a>
         
-            <a class="category-link" href="/categories/%E7%AE%97%E6%B3%95/">
-                算法
+            <a class="category-link" href="/categories/%E9%A2%98%E8%A7%A3/">
+                题解
                 <div class="category-count">1</div>
             </a>
         </div>
@@ -276,8 +276,9 @@
         
           <div class="truncate-text">
             
-              [USACO07MAR] Face The Right Way G题目描述Farmer John has arranged his N (1 ≤ N ≤ 5,000) cows in a row and many of them are facing forward, like good cows. Some of them are facing backward, though, and he needs them all to face forward to make his life perfect.
-Fortunately, FJ recently bought an automatic cow turning machine. Since he purchased the discount model, it must be irrevocably preset to turn K (1 ≤ K ≤ N) cows at once, and it can only turn cows that are all standing next to each other in...
+              题目描述
+Farmer John has arranged his $N$ ($1 \leq N \leq 5,000$) cows in a row and many of them are facing forward, like good cows. Some of them are facing backward, though, and he needs them all to face forward to make his life perfect.
+Fortunately, FJ recently bought an automatic cow turning machine. Since he purchased the discount model, it must be irrevocably preset to turn $K$ ($1 \leq K \leq N$) cows at once, and it can only turn cows that are all standing next to each other in line. Each ...
             
           </div>
         
@@ -349,12 +350,16 @@ Fortunately, FJ recently bought an automatic cow turning machine. Since he purch
         
           <div class="truncate-text">
             
-              0 前言作为一个没学基础的蒟蒻,高精打一个下午加一个早上应该不是什么大事吧
-1 介绍众所周知，C++的整形变量int仅能存储 $ -2^{31} $ 到 $ 2^{31} - 1 $之间的整数，long long也只能存储储$ -2^{31} $ 到 $ 2^{31} - 1 $之间的整数，如果遇到超过这些C++整形变量范围的数字及运算，就得用到__int128高精度算法了。
-2 原理首先，让我们回想一下小学时代教的竖式，高精度算法实质上就是对加乘竖式的模拟(不要问我减法除法去那里了，我太菜了还不会)。
+              0 前言
+作为一个没学基础的蒟蒻,高精打一个下午加一个早上应该不是什么大事吧
+1 介绍
+众所周知，C++的整形变量int仅能存储 $ -2^{31} $ 到 $ 2^{31} - 1 $之间的整数，long long也只能存储储$ -2^{31} $ 到 $ 2^{31} - 1 $之间的整数，如果遇到超过这些C++整形变量范围的数字及运算，就得用到~~__int128~~高精度算法了。
+2 原理
+首先，让我们回想一下小学时代教的竖式，高精度算法实质上就是对加乘竖式的模拟~~(不要问我减法除法去那里了，我太菜了还不会)~~。
 当然，一位一位的存储不仅浪费空间，也会拖慢运行时间，所以我们就需要用到压位的技巧，所谓压位，其实就是一次存储多位数字，事实证明，压位可以让1000位以上的高精度数字跑得飞快。
 其实高精度算法就是个类似int、long long之类的模板，记住就好了。
-3 代码实现12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596...
+3 代码实现
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535...
             
           </div>
         
@@ -421,5 +426,20 @@ Fortunately, FJ recently bought an automatic cow turning machine. Since he purch
 
   </div>
   <script src="/js/light-dark-switch.js"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
