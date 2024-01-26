@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+
+
+<html theme="dark" showBanner="true" hasBanner="true" > 
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet">
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet">
+<link href="https://cdn.staticfile.org/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet">
+<script src="/js/color.global.min.js" ></script>
+<script src="/js/load-settings.js" ></script>
+<head>
+  <meta charset="utf-8">
+  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=true"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'true');
+</script>
+<!-- End Google Analytics -->
+
+  
+  
+
+  
+  <title>最大子矩形问题 | 2005ZHW&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="preload" href="/css/fonts/Roboto-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+  <link rel="preload" href="/css/fonts/Roboto-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+
+  <meta name="description" content="0 前言 最近做到了很多关于求解最大子矩形的问题，写个博客稍微总结一下 (顺便整理一下模板) 1 一些基本定义  有效子矩形：内部不包含任何障碍点且边界与坐标轴平行的子矩形。 极大有效子矩形：不存在包含它且比它大的有效子矩形的有效子矩形。 最大(有效)子矩形：所有极大有效子矩形中最大的一个(或多个)有效子矩形。  2 两种常用的算法 算法1 基于障碍点的算法 例题1 奶牛浴场 题目描述 由于 Jo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="最大子矩形问题">
+<meta property="og:url" content="http://2005zhw.github.io/2024/01/26/Maximum-Subrectangle-Problem/index.html">
+<meta property="og:site_name" content="2005ZHW&#39;s Blog">
+<meta property="og:description" content="0 前言 最近做到了很多关于求解最大子矩形的问题，写个博客稍微总结一下 (顺便整理一下模板) 1 一些基本定义  有效子矩形：内部不包含任何障碍点且边界与坐标轴平行的子矩形。 极大有效子矩形：不存在包含它且比它大的有效子矩形的有效子矩形。 最大(有效)子矩形：所有极大有效子矩形中最大的一个(或多个)有效子矩形。  2 两种常用的算法 算法1 基于障碍点的算法 例题1 奶牛浴场 题目描述 由于 Jo">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-26T12:47:54.000Z">
+<meta property="article:modified_time" content="2024-01-26T15:35:35.400Z">
+<meta property="article:author" content="Hervey">
+<meta property="article:tag" content="悬线法">
+<meta property="article:tag" content="障碍点法">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="2005ZHW's Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-32.png" sizes="32x32">
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-128.png" sizes="128x128">
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-180.png" sizes="180x180">
+    <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-192.png" sizes="192x192">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-32.png" sizes="32x32">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-128.png" sizes="128x128">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-180.png" sizes="180x180">
+    <link rel="icon" media="(prefers-color-scheme: dark)" href="/images/favicon-dark-192.png" sizes="192x192">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+<body>
+  
+  
+    
+<div id="banner" class="">
+  <img src="/assets/banner.png" itemprop="image">
+  <div id="banner-dim"></div>
+</div>
+ 
+   
+  <div id="main-grid" class="  ">
+    <div id="nav" class=""  >
+      <navbar id="navbar">
+  <nav id="title-nav">
+    <a href="/">
+      <div id="vivia-logo">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <div>2005ZHW's Blog </div>
+    </a>
+  </nav>
+  <nav id="main-nav">
+    
+      <a class="main-nav-link" href="/">Home</a>
+    
+      <a class="main-nav-link" href="/archives">Archives</a>
+    
+      <a class="main-nav-link" href="/about">About</a>
+    
+  </nav>
+  <nav id="sub-nav">
+    <a id="theme-btn" class="nav-icon">
+      <span class="light-mode-icon"><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M438.5-829.913v-48q0-17.452 11.963-29.476 11.964-12.024 29.326-12.024 17.363 0 29.537 12.024t12.174 29.476v48q0 17.452-11.963 29.476-11.964 12.024-29.326 12.024-17.363 0-29.537-12.024T438.5-829.913Zm0 747.826v-48q0-17.452 11.963-29.476 11.964-12.024 29.326-12.024 17.363 0 29.537 12.024t12.174 29.476v48q0 17.452-11.963 29.476-11.964 12.024-29.326 12.024-17.363 0-29.537-12.024T438.5-82.087ZM877.913-438.5h-48q-17.452 0-29.476-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537t29.476-12.174h48q17.452 0 29.476 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T877.913-438.5Zm-747.826 0h-48q-17.452 0-29.476-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537T82.087-521.5h48q17.452 0 29.476 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T130.087-438.5Zm660.174-290.87-34.239 32q-12.913 12.674-29.565 12.174-16.653-.5-29.327-13.174-12.674-12.673-12.554-28.826.12-16.152 12.794-28.826l33-35q12.913-12.674 30.454-12.674t30.163 12.847q12.709 12.846 12.328 30.826-.38 17.98-13.054 30.653ZM262.63-203.978l-32 34q-12.913 12.674-30.454 12.674t-30.163-12.847q-12.709-12.846-12.328-30.826.38-17.98 13.054-30.653l33.239-31q12.913-12.674 29.565-12.174 16.653.5 29.327 13.174 12.674 12.673 12.554 28.826-.12 16.152-12.794 28.826Zm466.74 33.239-32-33.239q-12.674-12.913-12.174-29.565.5-16.653 13.174-29.327 12.673-12.674 28.826-13.054 16.152-.38 28.826 12.294l35 33q12.674 12.913 12.674 30.454t-12.847 30.163q-12.846 12.709-30.826 12.328-17.98-.38-30.653-13.054ZM203.978-697.37l-34-33q-12.674-12.913-13.174-29.945-.5-17.033 12.174-29.707t31.326-13.293q18.653-.62 31.326 13.054l32 34.239q11.674 12.913 11.174 29.565-.5 16.653-13.174 29.327-12.673 12.674-28.826 12.554-16.152-.12-28.826-12.794ZM480-240q-100 0-170-70t-70-170q0-100 70-170t170-70q100 0 170 70t70 170q0 100-70 170t-170 70Zm-.247-82q65.703 0 111.475-46.272Q637-414.544 637-480.247t-45.525-111.228Q545.95-637 480.247-637t-111.475 45.525Q323-545.95 323-480.247t45.525 111.975Q414.05-322 479.753-322ZM481-481Z"/></svg></span>
+      <span class="dark-mode-icon"><svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M480.239-116.413q-152.63 0-258.228-105.478Q116.413-327.37 116.413-480q0-130.935 77.739-227.435t206.304-125.043q43.022-9.631 63.87 10.869t3.478 62.805q-8.891 22.043-14.315 44.463-5.424 22.42-5.424 46.689 0 91.694 64.326 155.879 64.325 64.186 156.218 64.186 24.369 0 46.978-4.946 22.609-4.945 44.413-14.076 42.826-17.369 62.967 1.142 20.142 18.511 10.511 61.054Q807.174-280 712.63-198.206q-94.543 81.793-232.391 81.793Zm0-95q79.783 0 143.337-40.217 63.554-40.218 95.793-108.283-15.608 4.044-31.097 5.326-15.49 1.283-31.859.805-123.706-4.066-210.777-90.539-87.071-86.473-91.614-212.092-.24-16.369.923-31.978 1.164-15.609 5.446-30.978-67.826 32.478-108.282 96.152Q211.652-559.543 211.652-480q0 111.929 78.329 190.258 78.329 78.329 190.258 78.329ZM466.13-465.891Z"/></svg></span>
+    </a>
+    
+      <a id="nav-rss-link" class="nav-icon mobile-hide" href="/atom.xml" title="RSS 订阅">
+        <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M198-120q-25.846 0-44.23-18.384-18.384-18.385-18.384-44.23 0-25.846 18.384-44.23 18.384-18.385 44.23-18.385 25.846 0 44.23 18.385 18.384 18.384 18.384 44.23 0 25.845-18.384 44.23Q223.846-120 198-120Zm538.385 0q-18.846 0-32.923-13.769-14.076-13.769-15.922-33.23-8.692-100.616-51.077-188.654-42.385-88.039-109.885-155.539-67.5-67.501-155.539-109.885Q283-663.462 182.385-672.154q-19.461-1.846-33.23-16.23-13.769-14.385-13.769-33.846t14.076-32.922q14.077-13.461 32.923-12.23 120.076 8.692 226.038 58.768 105.961 50.077 185.73 129.846 79.769 79.769 129.846 185.731 50.077 105.961 58.769 226.038 1.231 18.846-12.538 32.922Q756.461-120 736.385-120Zm-252 0q-18.231 0-32.423-13.461t-18.653-33.538Q418.155-264.23 348.886-333.5q-69.27-69.27-166.501-84.423-20.077-4.462-33.538-18.961-13.461-14.5-13.461-33.346 0-19.076 13.884-33.23 13.884-14.153 33.115-10.922 136.769 15.384 234.384 112.999 97.615 97.615 112.999 234.384 3.231 19.23-10.538 33.115Q505.461-120 484.385-120Z"/></svg>
+      </a>
+    
+    <div id="nav-menu-btn" class="nav-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" width="20"><path d="M177.37-252.282q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Zm0-186.218q-17.453 0-29.477-11.963-12.024-11.964-12.024-29.326 0-17.363 12.024-29.537T177.37-521.5h605.26q17.453 0 29.477 11.963 12.024 11.964 12.024 29.326 0 17.363-12.024 29.537T782.63-438.5H177.37Zm0-186.217q-17.453 0-29.477-11.964-12.024-11.963-12.024-29.326t12.024-29.537q12.024-12.174 29.477-12.174h605.26q17.453 0 29.477 11.964 12.024 11.963 12.024 29.326t-12.024 29.537q-12.024 12.174-29.477 12.174H177.37Z"/></svg>
+    </div>
+  </nav>
+</navbar>
+<div id="nav-dropdown" class="hidden">
+  <div id="dropdown-link-list">
+    
+      <a class="nav-dropdown-link" href="/">Home</a>
+    
+      <a class="nav-dropdown-link" href="/archives">Archives</a>
+    
+      <a class="nav-dropdown-link" href="/about">About</a>
+    
+    
+      <a class="nav-dropdown-link" href="/atom.xml" title="RSS 订阅">RSS</a>
+     
+    </div>
+</div>
+<script>
+  let dropdownBtn = document.getElementById("nav-menu-btn");
+  let dropdownEle = document.getElementById("nav-dropdown");
+  dropdownBtn.onclick = function() {
+    dropdownEle.classList.toggle("hidden");
+  }
+</script>
+    </div>
+    <div id="sidebar-wrapper">
+      <sidebar id="sidebar">
+  
+    <div class="widget-wrap">
+  <div class="info-card">
+    <div class="avatar">
+      
+      <div class="img-dim"></div>
+    </div>
+    <div class="info">
+      <div class="username">2005ZHW </div>
+      <div class="dot"></div>
+      <div class="subtitle">A ZJUT ACMer </div>
+      <div class="link-list">
+        
+          <a class="link-btn" target="_blank" rel="noopener" href="https://github.com/2005ZHW" title="GitHub"><i class="fa-brands fa-github"></i></a>
+         
+      </div>  
+    </div>
+  </div>
+</div>
+
+  
+  <div class="sticky">
+    
+      
+
+
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">分类</h3>
+      <div class="category-box">
+            <a class="category-link" href="/categories/%E7%AE%97%E6%B3%95/">
+                算法
+                <div class="category-count">1</div>
+            </a>
+        
+            <a class="category-link" href="/categories/%E9%A2%98%E8%A7%A3/">
+                题解
+                <div class="category-count">2</div>
+            </a>
+        </div>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">标签</h3>
+      <ul class="widget-tag-list" itemprop="keywords"><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E5%B7%AE%E5%88%86/" rel="tag">差分</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E6%82%AC%E7%BA%BF%E6%B3%95/" rel="tag">悬线法</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" rel="tag">树状数组</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E7%A6%BB%E6%95%A3%E5%8C%96/" rel="tag">离散化</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83/" rel="tag">贪心</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E9%9A%9C%E7%A2%8D%E7%82%B9%E6%B3%95/" rel="tag">障碍点法</a></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">归档</h3>
+      
+      
+        <a class="archive-link" href="/archives/2024/01 ">
+          一月 2024 
+          <div class="archive-count">3 </div>
+        </a>
+      
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget-wrap">
+    <div class="widget">
+      <h3 class="widget-title">最新文章</h3>
+      <ul>
+        
+          <a class="recent-link" href="/2024/01/26/Maximum-Subrectangle-Problem/" title="最大子矩形问题" >
+            <div class="recent-link-text">
+              最大子矩形问题
+            </div>
+          </a>
+        
+          <a class="recent-link" href="/2024/01/25/USACO18OPEN-Out-of-Sorts-G/" title="[USACO18OPEN] Out of Sorts G" >
+            <div class="recent-link-text">
+              [USACO18OPEN] Out of Sorts G
+            </div>
+          </a>
+        
+          <a class="recent-link" href="/2024/01/24/USACO07MAR-Face-The-Right-Way-G/" title="[USACO07MAR] Face The Right Way G" >
+            <div class="recent-link-text">
+              [USACO07MAR] Face The Right Way G
+            </div>
+          </a>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+  </div>
+</sidebar>
+    </div>
+    <div id="content-body">
+       
+
+
+<article id="post-Maximum-Subrectangle-Problem" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  
+    
+   
+  <div class="article-inner">
+    <div class="article-main">
+      <header class="article-header">
+        
+<div class="main-title-bar">
+  <div class="main-title-dot"></div>
+  
+    
+      <h1 class="p-name article-title" itemprop="headline name">
+        最大子矩形问题
+      </h1>
+    
+  
+</div>
+
+        <div class='meta-info-bar'>
+          <div class="meta-info">
+  <time class="dt-published" datetime="2024-01-26T12:47:54.000Z" itemprop="datePublished">2024-01-26</time>
+</div>
+          <div class="need-seperator meta-info">
+            <div class="meta-cate-flex">
+  
+  <a class="meta-cate-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+   
+</div>
+  
+          </div>
+          <div class="wordcount need-seperator meta-info">
+            4.6k 词 
+          </div>
+        </div>
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%82%AC%E7%BA%BF%E6%B3%95/" rel="tag">悬线法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9A%9C%E7%A2%8D%E7%82%B9%E6%B3%95/" rel="tag">障碍点法</a></li></ul>
+
+      </header>
+      <div class="e-content article-entry" itemprop="articleBody">
+        
+          <h2 id="0-前言">0 前言</h2>
+<p>最近做到了很多关于求解最大子矩形的问题，写个博客稍微总结一下 <s>(顺便整理一下模板)</s></p>
+<h2 id="1-一些基本定义">1 一些基本定义</h2>
+<ol>
+<li><strong>有效子矩形</strong>：内部不包含任何障碍点且边界与坐标轴平行的子矩形。</li>
+<li><strong>极大有效子矩形</strong>：不存在包含它且比它大的有效子矩形的有效子矩形。</li>
+<li><strong>最大(有效)子矩形</strong>：所有极大有效子矩形中最大的一个(或多个)有效子矩形。</li>
+</ol>
+<h2 id="2-两种常用的算法">2 两种常用的算法</h2>
+<h3 id="算法1-基于障碍点的算法">算法1 基于障碍点的算法</h3>
+<h3 id="例题1-奶牛浴场">例题1 奶牛浴场</h3>
+<h4 id="题目描述">题目描述</h4>
+<p>由于 John 建造了牛场围栏，激起了奶牛的愤怒，奶牛的产奶量急剧减少。为了讨好奶牛，John 决定在牛场中建造一个大型浴场。但是 John 的奶牛有一个奇怪的习惯，每头奶牛都必须在牛场中的一个固定的位置产奶，而奶牛显然不能在浴场中产奶，于是，John 希望所建造的浴场不覆盖这些产奶点。这回，他又要求助于 Clevow 了。你还能帮助 Clevow 吗？</p>
+<p>John 的牛场和规划的浴场都是矩形。浴场要完全位于牛场之内，并且浴场的轮廓要与牛场的轮廓平行或者重合。浴场不能覆盖任何产奶点，但是产奶点可以位于浴场的轮廓上。</p>
+<p>Clevow 当然希望浴场的面积尽可能大了，所以你的任务就是帮她计算浴场的最大面积。</p>
+<h4 id="输入格式">输入格式</h4>
+<p>输入文件的第一行包含两个整数 $L$ 和 $W$，分别表示牛场的长和宽。</p>
+<p>文件的第二行包含一个整数 $n$，表示产奶点的数量。</p>
+<p>以下 $n$ 行每行包含两个整数 $x$ 和 $y$，表示一个产奶点的坐标。</p>
+<p>所有产奶点都位于牛场内，即：$0 \le x \le L$，$0 \le y \le W$。</p>
+<h4 id="输出格式">输出格式</h4>
+<p>输出文件仅一行，包含一个整数 $S$，表示浴场的最大面积。</p>
+<h4 id="样例-1">样例 #1</h4>
+<h5 id="样例输入-1">样例输入 #1</h5>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">10 10</span><br><span class="line">4</span><br><span class="line">1 1</span><br><span class="line">9 1</span><br><span class="line">1 9</span><br><span class="line">9 9</span><br></pre></td></tr></table></figure>
+<h5 id="样例输出-1">样例输出 #1</h5>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">80</span><br></pre></td></tr></table></figure>
+<h4 id="提示">提示</h4>
+<p>对于所有数据，$0 \le n \le 5 \times 10^3$，$1 \le L,W \le 3 \times 10^4$。</p>
+<p>Winter Camp 2002</p>
+<h4 id="题解">题解</h4>
+<p>这道题障碍点数较小，适合使用基于障碍点的算法实现</p>
+<p>先将障碍点按横坐标排序(以 $x$ 坐标为第一关键字，$y$ 坐标为第二关键字)</p>
+<p>从第1个障碍点开始，从左至右依次扫描每个障碍点 $P_i(x_i, y_i), i \in [1, n]$</p>
+<p>一开始设置上下边界为 $y1 = 0, y2 = w$，不断通过加入新的障碍点缩小上下边界范围</p>
+<p>即对于任何一个新加入的障碍点 $P_j(x_j,y_j), j \in (i, n]$:</p>
+<p>如果该点位于 $P_i$ 下方 $(y_j &lt; y_i)$，则更新下边界 $y1 = max{y1, y_j}$</p>
+<p>反之，如果该点位于 $P_i$ 上方 $(y_j &gt; y_i)$，则更新上边界 $y2 = min{y2, y_j}$</p>
+<p>同时计算以障碍点 $P_i(x_i, y_i), P_j(x_j, y_j)$ 所在竖直线与上下两端的极大有效子矩形面积:</p>
+<p>$$S_x = (x_j - x_i) \times (y_2 - y_1)$$</p>
+<p>同理，从右至左扫描再扫描一次</p>
+<p>但是这样还不够，我们还没有考虑宽度与原矩形相同的极大有效子矩形</p>
+<p>因此还需要将障碍点按纵坐标排序(以 $y$ 坐标为第一关键字，$x$ 坐标为第二关键字)</p>
+<p>计算由相邻障碍点 $P_i(x_i, y_i), P_{i + 1}(x_{i + 1}, y_{i + 1}), i \in [1, n)$ 所在水平线与左右两端围成的极大有效子矩形面积:</p>
+<p>$$S_y = L \times (y_{i+1} - y_i)$$</p>
+<p>通过以上方法求得的极大有效子矩形面积的最大值即为最大(有效)子矩形的面积</p>
+<p>总体时间复杂度 $\Theta(n^2)$ ( $n$ 为障碍点数)</p>
+<h4 id="代码">代码</h4>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">5000</span> + <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> l, w, n;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Point</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> x, y;</span><br><span class="line">    <span class="built_in">Point</span>(<span class="type">int</span> x = <span class="number">0</span>, <span class="type">int</span> y = <span class="number">0</span>) : <span class="built_in">x</span>(x), <span class="built_in">y</span>(y) &#123;&#125;</span><br><span class="line">&#125; p[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>, &amp;l, &amp;w, &amp;n);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;p[i].x, &amp;p[i].y);</span><br><span class="line">    <span class="comment">// 将四个顶点设置为障碍点</span></span><br><span class="line">    p[++n] = <span class="built_in">Point</span>(<span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    p[++n] = <span class="built_in">Point</span>(<span class="number">0</span>, w);</span><br><span class="line">    p[++n] = <span class="built_in">Point</span>(l, <span class="number">0</span>);</span><br><span class="line">    p[++n] = <span class="built_in">Point</span>(l, w);</span><br><span class="line">    <span class="comment">// ans记录最大子矩形面积</span></span><br><span class="line">    <span class="type">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 障碍点法求解</span></span><br><span class="line">    <span class="comment">// 矩形边界</span></span><br><span class="line">    <span class="type">int</span> x1, y1, x2, y2;</span><br><span class="line">    <span class="comment">// 横向扫描</span></span><br><span class="line">    <span class="built_in">sort</span>(p + <span class="number">1</span>, p + n + <span class="number">1</span>, [&amp;](Point A, Point B)</span><br><span class="line">         &#123; <span class="keyword">return</span> A.x &lt; B.x || A.x == B.x &amp;&amp; A.y &lt; B.y; &#125;);</span><br><span class="line">    <span class="comment">// 自左向右</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        x1 = p[i].x, y1 = <span class="number">0</span>, y2 = w;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = i + <span class="number">1</span>; j &lt;= n; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            x2 = p[j].x;</span><br><span class="line">            ans = <span class="built_in">max</span>(ans, (x2 - x1) * (y2 - y1));</span><br><span class="line">            <span class="keyword">if</span> (p[j].y &lt; p[i].y)</span><br><span class="line">                y1 = <span class="built_in">max</span>(y1, p[j].y);</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                y2 = <span class="built_in">min</span>(y2, p[j].y);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 自右向左</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = n; i &gt;= <span class="number">1</span>; i--)</span><br><span class="line">    &#123;</span><br><span class="line">        x2 = p[i].x, y1 = <span class="number">0</span>, y2 = w;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = i - <span class="number">1</span>; j &gt;= <span class="number">1</span>; j--)</span><br><span class="line">        &#123;</span><br><span class="line">            x1 = p[j].x;</span><br><span class="line">            ans = <span class="built_in">max</span>(ans, (x2 - x1) * (y2 - y1));</span><br><span class="line">            <span class="keyword">if</span> (p[j].y &lt; p[i].y)</span><br><span class="line">                y1 = <span class="built_in">max</span>(y1, p[j].y);</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                y2 = <span class="built_in">min</span>(y2, p[j].y);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 纵向扫描</span></span><br><span class="line">    <span class="built_in">sort</span>(p + <span class="number">1</span>, p + n + <span class="number">1</span>, [&amp;](Point A, Point B)</span><br><span class="line">         &#123; <span class="keyword">return</span> A.y &lt; B.y || A.y == B.y &amp;&amp; A.x &lt; B.x; &#125;);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; n; i++)</span><br><span class="line">        ans = <span class="built_in">max</span>(ans, l * (p[i + <span class="number">1</span>].y - p[i].y));</span><br><span class="line">    <span class="comment">// 输出答案</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, ans);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="算法2-悬线法">算法2 悬线法</h3>
+<h3 id="例题2-玉蟾宫">例题2 玉蟾宫</h3>
+<h4 id="题目背景">题目背景</h4>
+<p>有一天，小猫 rainbow 和 freda 来到了湘西张家界的天门山玉蟾宫，玉蟾宫宫主蓝兔盛情地款待了它们，并赐予它们一片土地。</p>
+<h4 id="题目描述-2">题目描述</h4>
+<p>这片土地被分成 $N\times M$ 个格子，每个格子里写着 ‘R’ 或者 ‘F’，R 代表这块土地被赐予了 rainbow，F 代表这块土地被赐予了 freda。</p>
+<p>现在 freda 要在这里卖萌。。。它要找一块矩形土地，要求这片土地都标着 ‘F’ 并且面积最大。</p>
+<p>但是 rainbow 和 freda 的 OI 水平都弱爆了，找不出这块土地，而蓝兔也想看 freda 卖萌（她显然是不会编程的……），所以它们决定，如果你找到的土地面积为 $S$，它们每人给你 $S$ 两银子。</p>
+<h4 id="输入格式-2">输入格式</h4>
+<p>第一行两个整数 $N$，$M$，表示矩形土地有 $N$ 行 $M$ 列。</p>
+<p>接下来 $N$ 行，每行 $M$ 个用空格隔开的字符 ‘F’ 或 ‘R’，描述了矩形土地。</p>
+<h4 id="输出格式-2">输出格式</h4>
+<p>输出一个整数，表示你能得到多少银子，即 ($3\times \text{最大 ‘F’ 矩形土地面积}$) 的值。</p>
+<h4 id="样例-1-2">样例 #1</h4>
+<h5 id="样例输入-1-2">样例输入 #1</h5>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">5 6 </span><br><span class="line">R F F F F F </span><br><span class="line">F F F F F F </span><br><span class="line">R R R F F F </span><br><span class="line">F F F F F F </span><br><span class="line">F F F F F F</span><br></pre></td></tr></table></figure>
+<h5 id="样例输出-1-2">样例输出 #1</h5>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">45</span><br></pre></td></tr></table></figure>
+<h4 id="提示-2">提示</h4>
+<p>对于 $50%$ 的数据，$1 \leq N, M \leq 200$。<br>
+对于 $100%$ 的数据，$1 \leq N, M \leq 1000$。</p>
+<h4 id="题解-2">题解</h4>
+<p>这道题障碍点数可能到达 $N \times M$ ，算法1可能会被卡，因此使用悬线法。</p>
+<p><strong>悬线法</strong></p>
+<p>悬线的定义(引用自<a target="_blank" rel="noopener" href="https://oi-wiki.org/misc/hoverline/">悬线法 - OI Wiki</a>)</p>
+<blockquote>
+<p>悬线，就是一条竖线，这条竖线有初始位置和高度两个性质，可以在其上端点不超过当前位置的矩形高度的情况下左右移动。</p>
+</blockquote>
+<p>对于矩形中的任意一个点 $(i, j)$ , 定义三个量 $h_{i,j}$, $l_{i,j}$ , $r_{i,j}$ ，分别表示 <strong>悬线的高度</strong> ， <strong>悬线最多能向左拓展到的位置坐标</strong> ， <strong>悬线最多能向右拓展到的位置坐标</strong> 。</p>
+<p>先考虑计算 $h_{i,j}$ : 如果该点为障碍点，那么其悬线高度显然为 $0$，反之，则为 $h_{i, j - 1} + 1$.</p>
+<p>再考虑计算 $ l_{i, j}, r_{i, j} $ , 易知初始情况下 $l_{i, j} = r_{i, j} = j$</p>
+<p>以向左拓展悬线计算 $l_{i, j}$ 为例:</p>
+<ul>
+<li>
+<p>如果当前已经拓展到边界，即 $l_{i, j} = 1$ ，则不可以再进行拓展</p>
+</li>
+<li>
+<p>如果当前点的左侧悬线高度 <strong>小于</strong> 该点悬线高度，即 $h_{i, l_{i, j} - 1} &lt; h_{i, j}$，则不可以再进行拓展</p>
+</li>
+<li>
+<p>如果当前点的左侧悬线高度 <strong>大于等于</strong> 该点悬线高度，即 $h_{i, l_{i, j} - 1} \geq h_{i, j}$，则可以继续向左拓展，而且 $l_{i, j} - 1$ 位置所能拓展到最左侧的位置从 $j$ 位置开始也必定能拓展到，可以递推求解</p>
+</li>
+</ul>
+<p>可以证明，最终每个 $l_{i, j}$ 最多会被其他的 $l_{i, k}$ 遍历一次，因此每次拓展的时间复杂度为 $\Theta(N)$</p>
+<p>最大子矩形的面积为 $max{(r_{i, j} - l_{i, j} + 1) * h_{i, j}}$</p>
+<p>整体的时间复杂度为 $\Theta(N \times M)$</p>
+<h4 id="代码-2">代码</h4>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">1000</span> + <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n, m;</span><br><span class="line"><span class="type">char</span> a[<span class="number">3</span>];</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> h[N], l[N], r[N];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;n, &amp;m);</span><br><span class="line">    <span class="type">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 初始化数组</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt;= m; j++)</span><br><span class="line">            l[j] = r[j] = j;</span><br><span class="line">        <span class="comment">// 更新高度</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt;= m; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, a);</span><br><span class="line">            <span class="keyword">if</span> (a[<span class="number">0</span>] == <span class="string">&#x27;F&#x27;</span>)</span><br><span class="line">                h[j]++;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (a[<span class="number">0</span>] == <span class="string">&#x27;R&#x27;</span>)</span><br><span class="line">                h[j] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 向左扩展</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt;= m; j++)</span><br><span class="line">            <span class="keyword">while</span> (l[j] != <span class="number">1</span> &amp;&amp; h[l[j] - <span class="number">1</span>] &gt;= h[j])</span><br><span class="line">                l[j] = l[l[j] - <span class="number">1</span>];</span><br><span class="line">        <span class="comment">// 向右扩展</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = m; j &gt;= <span class="number">1</span>; j--)</span><br><span class="line">            <span class="keyword">while</span> (r[j] != m &amp;&amp; h[r[j] + <span class="number">1</span>] &gt;= h[j])</span><br><span class="line">                r[j] = r[r[j] + <span class="number">1</span>];</span><br><span class="line">        <span class="comment">// 计算极大有效子矩形面积并更新答案</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt;= m; j++)</span><br><span class="line">            ans = <span class="built_in">max</span>(ans, (r[j] - l[j] + <span class="number">1</span>) * h[j]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, ans * <span class="number">3</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="参考资料">参考资料</h2>
+<p>《浅谈用极大化思想解决最大子矩形问题》, 王知昆 , 2003年集训队论文</p>
+<p><a target="_blank" rel="noopener" href="https://oi-wiki.org/misc/hoverline/">悬线法 - OI Wiki</a></p>
+
+        
+      </div>
+
+         
+    </div>
+    
+     
+  </div>
+  
+    
+<nav id="article-nav">
+  <a class="article-nav-btn left  disabled "
+     >
+    <i class="fa-solid fa-angle-left"></i>
+    <p class="title-text">
+        
+    </p>
+  </a>
+  <a class="article-nav-btn right "
+    
+      href="/2024/01/25/USACO18OPEN-Out-of-Sorts-G/"
+      title="[USACO18OPEN] Out of Sorts G"
+     >
+
+    <p class="title-text">
+      
+        [USACO18OPEN] Out of Sorts G
+        
+    </p>
+    <i class="fa-solid fa-angle-right"></i>
+  </a>
+</nav>
+
+
+  
+</article>
+
+
+
+
+
+    </div>
+    <div id="footer-wrapper">
+      <footer id="footer">
+  
+  <div id="footer-info" class="inner">
+    
+    &copy; 2024 2005ZHW<br>
+    Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & Theme <a target="_blank" rel="noopener" href="https://github.com/saicaca/hexo-theme-vivia">Vivia</a>
+  </div>
+</footer>
+
+    </div>
+    <div class="back-to-top-wrapper">
+    <button id="back-to-top-btn" class="back-to-top-btn hide" onclick="topFunction()">
+        <i class="fa-solid fa-angle-up"></i>
+    </button>
+</div>
+
+<script>
+    function topFunction() {
+        window.scroll({ top: 0, behavior: 'smooth' });
+    }
+    let btn = document.getElementById('back-to-top-btn');
+    function scrollFunction() {
+        if (document.body.scrollTop > 600 || document.documentElement.scrollTop > 600) {
+            btn.classList.remove('hide')
+        } else {
+            btn.classList.add('hide')
+        }
+    }
+    window.onscroll = function() {
+        scrollFunction();
+    }
+</script>
+
+  </div>
+  <script src="/js/light-dark-switch.js"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

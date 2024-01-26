@@ -177,7 +177,7 @@
   <div class="widget-wrap">
     <div class="widget">
       <h3 class="widget-title">标签</h3>
-      <ul class="widget-tag-list" itemprop="keywords"><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E5%B7%AE%E5%88%86/" rel="tag">差分</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" rel="tag">树状数组</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E6%A8%A1%E6%9D%BF/" rel="tag">模板</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E7%A6%BB%E6%95%A3%E5%8C%96/" rel="tag">离散化</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83/" rel="tag">贪心</a></li></ul>
+      <ul class="widget-tag-list" itemprop="keywords"><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E5%B7%AE%E5%88%86/" rel="tag">差分</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E6%82%AC%E7%BA%BF%E6%B3%95/" rel="tag">悬线法</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" rel="tag">树状数组</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E7%A6%BB%E6%95%A3%E5%8C%96/" rel="tag">离散化</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83/" rel="tag">贪心</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/%E9%9A%9C%E7%A2%8D%E7%82%B9%E6%B3%95/" rel="tag">障碍点法</a></li></ul>
     </div>
   </div>
 
@@ -191,12 +191,7 @@
       
         <a class="archive-link" href="/archives/2024/01 ">
           一月 2024 
-          <div class="archive-count">2 </div>
-        </a>
-      
-        <a class="archive-link" href="/archives/2020/09 ">
-          九月 2020 
-          <div class="archive-count">1 </div>
+          <div class="archive-count">3 </div>
         </a>
       
     </div>
@@ -210,6 +205,12 @@
       <h3 class="widget-title">最新文章</h3>
       <ul>
         
+          <a class="recent-link" href="/2024/01/26/Maximum-Subrectangle-Problem/" title="最大子矩形问题" >
+            <div class="recent-link-text">
+              最大子矩形问题
+            </div>
+          </a>
+        
           <a class="recent-link" href="/2024/01/25/USACO18OPEN-Out-of-Sorts-G/" title="[USACO18OPEN] Out of Sorts G" >
             <div class="recent-link-text">
               [USACO18OPEN] Out of Sorts G
@@ -219,12 +220,6 @@
           <a class="recent-link" href="/2024/01/24/USACO07MAR-Face-The-Right-Way-G/" title="[USACO07MAR] Face The Right Way G" >
             <div class="recent-link-text">
               [USACO07MAR] Face The Right Way G
-            </div>
-          </a>
-        
-          <a class="recent-link" href="/2020/09/26/High-Accuracy-Algorithm/" title="高精度算法" >
-            <div class="recent-link-text">
-              高精度算法
             </div>
           </a>
         
@@ -238,6 +233,92 @@
     </div>
     <div id="content-body">
       
+   
+
+
+<article id="post-Maximum-Subrectangle-Problem" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+   
+  <div class="article-inner">
+    <div class="article-main">
+      <header class="article-header">
+        
+<div class="main-title-bar">
+  <div class="main-title-dot"></div>
+  
+    
+      <h1 itemprop="name">
+        <a class="p-name article-title" href="/2024/01/26/Maximum-Subrectangle-Problem/">最大子矩形问题</a>
+      </h1>
+    
+  
+</div>
+
+        <div class='meta-info-bar'>
+          <div class="meta-info">
+  <time class="dt-published" datetime="2024-01-26T12:47:54.000Z" itemprop="datePublished">2024-01-26</time>
+</div>
+          <div class="need-seperator meta-info">
+            <div class="meta-cate-flex">
+  
+  <a class="meta-cate-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+   
+</div>
+  
+          </div>
+          <div class="wordcount need-seperator meta-info">
+            4.6k 词 
+          </div>
+        </div>
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%82%AC%E7%BA%BF%E6%B3%95/" rel="tag">悬线法</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9A%9C%E7%A2%8D%E7%82%B9%E6%B3%95/" rel="tag">障碍点法</a></li></ul>
+
+      </header>
+      <div class="e-content article-entry" itemprop="articleBody">
+        
+          <div class="truncate-text">
+            
+              0 前言
+最近做到了很多关于求解最大子矩形的问题，写个博客稍微总结一下 (顺便整理一下模板)
+1 一些基本定义
+
+有效子矩形：内部不包含任何障碍点且边界与坐标轴平行的子矩形。
+极大有效子矩形：不存在包含它且比它大的有效子矩形的有效子矩形。
+最大(有效)子矩形：所有极大有效子矩形中最大的一个(或多个)有效子矩形。
+
+2 两种常用的算法
+算法1 基于障碍点的算法
+例题1 奶牛浴场
+题目描述
+由于 John 建造了牛场围栏，激起了奶牛的愤怒，奶牛的产奶量急剧减少。为了讨好奶牛，John 决定在牛场中建造一个大型浴场。但是 John 的奶牛有一个奇怪的习惯，每头奶牛都必须在牛场中的一个固定的位置产奶，而奶牛显然不能在浴场中产奶，于是，John 希望所建造的浴场不覆盖这些产奶点。这回，他又要求助于 Clevow 了。你还能帮助 Clevow 吗？
+John 的牛场和规划的浴场都是矩形。浴场要完全位于牛场之内，并且浴场的轮廓要与牛场的轮廓平行或者重合。浴场不能覆盖任何产奶点，但是产奶点可以位于浴场的轮廓上。
+Clevow 当然希望浴场的面积尽可能大了，所以你的任务就是帮她计算浴场的最大面积。...
+            
+          </div>
+        
+      </div>
+
+         
+    </div>
+    
+     
+    <a class="right-panel  non-pic  "
+      
+      href="/2024/01/26/Maximum-Subrectangle-Problem/" 
+    >
+       
+      <i class="fa-solid fa-angle-right non-pic"></i>
+       
+    </a>
+     
+  </div>
+  
+</article>
+
+
+
+
+
+
    
 
 
@@ -361,8 +442,8 @@ Apparently, the “moo” command in cow-...
             
               题目描述
 DESCRIPTION
-Farmer John has arranged his $N$ ($1 \leq N \leq 5,000$) cows in a row and many of them are facing forward, like good cows. Some of them are facing backward, though, and he needs them all to face forward to make his life perfect.
-Fortunately, FJ recently bought an automatic cow turning machine. Since he purchased the discount model, it must be irrevocably preset to turn $K$ ($1 \leq K \leq N$) cows at once, and it can only turn cows that are all standing next to each other in...
+Farmer John has arranged his $N$ ( $1 \leq N \leq 5,000$ ) cows in a row and many of them are facing forward, like good cows. Some of them are facing backward, though, and he needs them all to face forward to make his life perfect.
+Fortunately, FJ recently bought an automatic cow turning machine. Since he purchased the discount model, it must be irrevocably preset to turn $K$ ( $1 \leq K \leq N$ ) cows at once, and it can only turn cows that are all standing next to each othe...
             
           </div>
         
@@ -375,87 +456,6 @@ Fortunately, FJ recently bought an automatic cow turning machine. Since he purch
     <a class="right-panel  non-pic  "
       
       href="/2024/01/24/USACO07MAR-Face-The-Right-Way-G/" 
-    >
-       
-      <i class="fa-solid fa-angle-right non-pic"></i>
-       
-    </a>
-     
-  </div>
-  
-</article>
-
-
-
-
-
-
-   
-
-
-<article id="post-High-Accuracy-Algorithm" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-   
-  <div class="article-inner">
-    <div class="article-main">
-      <header class="article-header">
-        
-<div class="main-title-bar">
-  <div class="main-title-dot"></div>
-  
-    
-      <h1 itemprop="name">
-        <a class="p-name article-title" href="/2020/09/26/High-Accuracy-Algorithm/">高精度算法</a>
-      </h1>
-    
-  
-</div>
-
-        <div class='meta-info-bar'>
-          <div class="meta-info">
-  <time class="dt-published" datetime="2020-09-26T11:03:54.000Z" itemprop="datePublished">2020-09-26</time>
-</div>
-          <div class="need-seperator meta-info">
-            <div class="meta-cate-flex">
-  
-  <a class="meta-cate-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
-   
-</div>
-  
-          </div>
-          <div class="wordcount need-seperator meta-info">
-            2.6k 词 
-          </div>
-        </div>
-        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%A8%A1%E6%9D%BF/" rel="tag">模板</a></li></ul>
-
-      </header>
-      <div class="e-content article-entry" itemprop="articleBody">
-        
-          <div class="truncate-text">
-            
-              0 前言
-作为一个没学基础的蒟蒻,高精打一个下午加一个早上应该不是什么大事吧
-1 介绍
-众所周知，C++的整形变量int仅能存储 $ -2^{31} $ 到 $ 2^{31} - 1 $之间的整数，long long也只能存储储$ -2^{31} $ 到 $ 2^{31} - 1 $之间的整数，如果遇到超过这些C++整形变量范围的数字及运算，就得用到~~__int128~~高精度算法了。
-2 原理
-首先，让我们回想一下小学时代教的竖式，高精度算法实质上就是对加乘竖式的模拟~~(不要问我减法除法去那里了，我太菜了还不会)~~。
-当然，一位一位的存储不仅浪费空间，也会拖慢运行时间，所以我们就需要用到压位的技巧，所谓压位，其实就是一次存储多位数字，事实证明，压位可以让1000位以上的高精度数字跑得飞快。
-其实高精度算法就是个类似int、long long之类的模板，记住就好了。
-3 代码实现
-12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535...
-            
-          </div>
-        
-      </div>
-
-         
-    </div>
-    
-     
-    <a class="right-panel  non-pic  "
-      
-      href="/2020/09/26/High-Accuracy-Algorithm/" 
     >
        
       <i class="fa-solid fa-angle-right non-pic"></i>
