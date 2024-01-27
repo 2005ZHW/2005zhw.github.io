@@ -39,7 +39,7 @@
 <meta property="og:description" content="题目描述 DESCRIPTION Keeping an eye on long term career possibilities beyond the farm, Bessie the cow has started learning algorithms from various on-line coding websites. Her favorite algorithm thus far">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-01-25T08:45:34.000Z">
-<meta property="article:modified_time" content="2024-01-26T12:48:07.255Z">
+<meta property="article:modified_time" content="2024-01-27T01:17:51.831Z">
 <meta property="article:author" content="Hervey">
 <meta property="article:tag" content="离散化">
 <meta property="article:tag" content="树状数组">
@@ -164,14 +164,14 @@
     <div class="widget">
       <h3 class="widget-title">分类</h3>
       <div class="category-box">
-            <a class="category-link" href="/categories/%E7%AE%97%E6%B3%95/">
-                算法
-                <div class="category-count">1</div>
-            </a>
-        
             <a class="category-link" href="/categories/%E9%A2%98%E8%A7%A3/">
                 题解
                 <div class="category-count">2</div>
+            </a>
+        
+            <a class="category-link" href="/categories/%E7%AE%97%E6%B3%95/">
+                算法
+                <div class="category-count">1</div>
             </a>
         </div>
     </div>
@@ -305,7 +305,7 @@
 <h2 id="题解">题解</h2>
 <p>通过模拟题目所给的程序，我们可以注意到每次循环其实就是将未排序的部分中最小值和最大值分别移到左右端.</p>
 <p>对于任意位置的$x$，就是将在其前面大于$x$的数与在其后面小于$x$的数交换，故答案为 $max_{i=1}^{n}{\sum_{j=1}^{i}[a_j&gt;a_i]}$ .</p>
-<p>我们将序列$a_n$进行离散化，可以得到答案是 $max_{i=1}^{n}{\sum_{j=1}^{i}[a_j&gt;i]}$ ，但是这样的时间复杂度是 $\Theta(n^2)$ 并不能通过此题，考虑使用树状数组优化查询第二维，可将时间复杂度降为 $\Theta(nlogn)$ .</p>
+<p>我们将序列$a_n$进行离散化，可以得到答案是 $max_{i=1}^{n}{\sum_{j=1}^{i}[a_j&gt;i]}$ ，但是这样的时间复杂度是 $O(n^2)$ 并不能通过此题，考虑使用树状数组优化查询第二维，可将时间复杂度降为 $O(nlogn)$ .</p>
 <blockquote>
 <p>注意: 原本有序的序列也会进行一次循环，答案为 $1$ .</p>
 </blockquote>
