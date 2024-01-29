@@ -25,24 +25,18 @@
   
 
   
-  <title>[USACO04OPEN] MooFest G | 2005ZHW&#39;s Blog</title>
+  <title>标签: RMQ | 2005ZHW&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link rel="preload" href="/css/fonts/Roboto-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
   <link rel="preload" href="/css/fonts/Roboto-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous">
 
-  <meta name="description" content="题目描述 DESCRIPTION Every year, Farmer John’s $N$ ( $1 \leq N \leq 20,000$ ) cows attend “MooFest”,a social gathering of cows from around the world. MooFest involves a variety of events including haybale">
-<meta property="og:type" content="article">
-<meta property="og:title" content="[USACO04OPEN] MooFest G">
-<meta property="og:url" content="http://2005zhw.github.io/2024/01/27/USACO04OPEN-MooFest-G/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="2005ZHW&#39;s Blog">
+<meta property="og:url" content="http://2005zhw.github.io/tags/RMQ/index.html">
 <meta property="og:site_name" content="2005ZHW&#39;s Blog">
-<meta property="og:description" content="题目描述 DESCRIPTION Every year, Farmer John’s $N$ ( $1 \leq N \leq 20,000$ ) cows attend “MooFest”,a social gathering of cows from around the world. MooFest involves a variety of events including haybale">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-01-27T05:31:50.000Z">
-<meta property="article:modified_time" content="2024-01-27T07:03:45.834Z">
 <meta property="article:author" content="Hervey">
-<meta property="article:tag" content="CDQ分治">
-<meta property="article:tag" content="分治">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="2005ZHW's Blog" type="application/atom+xml">
@@ -252,134 +246,44 @@
     <div id="content-body">
        
 
-
-<article id="post-USACO04OPEN-MooFest-G" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  
-    
-   
-  <div class="article-inner">
-    <div class="article-main">
-      <header class="article-header">
-        
-<div class="main-title-bar">
-  <div class="main-title-dot"></div>
-  
-    
-      <h1 class="p-name article-title" itemprop="headline name">
-        [USACO04OPEN] MooFest G
-      </h1>
-    
-  
-</div>
-
-        <div class='meta-info-bar'>
-          <div class="meta-info">
-  <time class="dt-published" datetime="2024-01-27T05:31:50.000Z" itemprop="datePublished">2024-01-27</time>
-</div>
-          <div class="need-seperator meta-info">
-            <div class="meta-cate-flex">
-  
-  <a class="meta-cate-link" href="/categories/%E9%A2%98%E8%A7%A3/">题解</a>
-   
-</div>
-  
-          </div>
-          <div class="wordcount need-seperator meta-info">
-            3.3k 词 
-          </div>
-        </div>
-        
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CDQ%E5%88%86%E6%B2%BB/" rel="tag">CDQ分治</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%88%86%E6%B2%BB/" rel="tag">分治</a></li></ul>
-
-      </header>
-      <div class="e-content article-entry" itemprop="articleBody">
-        
-          <h2 id="题目描述">题目描述</h2>
-<h3 id="DESCRIPTION">DESCRIPTION</h3>
-<p>Every year, Farmer John’s $N$ ( $1 \leq N \leq 20,000$ ) cows attend “MooFest”,a social gathering of cows from around the world. MooFest involves a variety of events including haybale stacking, fence jumping, pin the tail on the farmer, and of course, mooing. When the cows all stand in line for a particular event, they moo so loudly that the roar is practically deafening. After participating in this event year after year, some of the cows have in fact lost a bit of their hearing.</p>
-<p>Each cow i has an associated “hearing” threshold $v(i)$ (in the range $1 \dots 20,000$ ). If a cow moos to cow $i$, she must use a volume of at least $v(i)$ times the distance between the two cows in order to be heard by cow $i$. If two cows $i$ and $j$ wish to converse, they must speak at a volume level equal to the distance between them times $max(v(i),v(j))$.</p>
-<p>Suppose each of the $N$ cows is standing in a straight line (each cow at some unique $x$ coordinate in the range $1 \dots 20,000$), and every pair of cows is carrying on a conversation using the smallest possible volume.</p>
-<p>Compute the sum of all the volumes produced by all $\frac{N \times (N-1)}{2}$ pairs of mooing cows.</p>
-<h3 id="INPUT-FORMAT">INPUT FORMAT</h3>
-<p>Line $1$: A single integer, $N$</p>
-<p>Lines $2 \dots N+1$: Two integers: the volume threshold and x coordinate for a cow. Line $2$ represents the first cow; line $3$ represents the second cow; and so on. No two cows will stand at the same location.</p>
-<h3 id="OUTPUT-FORMAT">OUTPUT FORMAT</h3>
-<p>Line $1$: A single line with a single integer that is the sum of all the volumes of the conversing cows</p>
-<h3 id="SAMPLE-INPUT">SAMPLE INPUT</h3>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">4</span><br><span class="line">3 1</span><br><span class="line">2 5</span><br><span class="line">2 6</span><br><span class="line">4 3</span><br></pre></td></tr></table></figure>
-<h3 id="SAMPLE-OUTPUT">SAMPLE OUTPUT</h3>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">57</span><br></pre></td></tr></table></figure>
-<h2 id="题目大意">题目大意</h2>
-<p>给定两个长度为 $n$ 的序列 $v_i, x_i$， 求$$ \sum_{i=1}^{n} \sum_{j=1}^{n} max(v_i, v_j) \times |x_i-x_j| (i \neq j)$$</p>
-<h2 id="题解">题解</h2>
-<p>暴力枚举计算该式的复杂度为 $O(n^2)$, 在原题的数据范围和现在的评测机运算能力下是可以通过的，不过这道题还有更优的做法。</p>
-<p>这是一个二维偏序问题，可以考虑使用CDQ分治的思想解决</p>
-<p>分析原来的式子，发现计算该式的瓶颈在于 $max(v_i, v_j)$ ，考虑将原序列按照 $v_i$ 的值进行升序排列，对第二维进行分治</p>
-<p>现在计算一段区间 $[l, r]$ 内的贡献 ，将区间分为 $[l, mid]$ 和 $[mid + 1, r]$ 两端，通过递归可以分别计算出其各自区间的总贡献，接下来要计算的就是跨越这两个区间的贡献</p>
-<p>考虑与 $x$ 有关的这个式子 $|x_i-x_j|$ ，将绝对值展开可以获得:</p>
-<p>$$<br>
-|x_i-x_j|=<br>
-\begin{cases}<br>
-x_i - x_j \quad x_i &gt; x_j \\<br>
-x_j - x_i \quad x_i &lt; x_j<br>
-\end{cases}<br>
-$$</p>
-<p>要想计算前一半区间 $[l, mid]$ 对后一半区间 $[mid + 1, r]$ 的贡献，我们需要对后一半区间的每一个点 $i$ 枚举前一半区间里所有点到该点的距离和，即</p>
-<p>$$<br>
-Sum_i = \sum_{j = l}^{mid}{|x_i - x_j|} \\<br>
-= \sum_{j = l}^{mid}{[x_j &lt; x_i](x_i - x_j)} + \sum_{j = l}^{mid}{[x_j &gt; x_i](x_j - x_i)} \\<br>
-= (\sum_{j = l}^{mid}{[x_j &lt; x_i]x_i} - \sum_{j = l}^{mid}{[x_j &lt; x_i]x_j}) + (\sum_{j = l}^{mid}{[x_j &gt; x_i]x_j} - \sum_{j = l}^{mid}{[x_j &gt; x_i]x_i}) \\<br>
-= x_i \times \sum_{j = l}^{mid}[x_j &lt; x_i] - \sum_{x_i &gt; x_j}x_j + \sum_{x_i &lt; x_j}x_j - x_i \times \sum_{j = l}^{mid}[x_j &gt; x_i]<br>
-$$</p>
-<p>归并排序的同时计算即可，时间复杂度 $O(nlogn)$.</p>
-<h2 id="代码实现">代码实现</h2>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">5e4</span> + <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> v first</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> x second</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line">pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt; a[N];</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> sumx[N];</span><br><span class="line"><span class="type">long</span> <span class="type">long</span> ans;</span><br><span class="line">pair&lt;<span class="type">int</span>, <span class="type">int</span>&gt; tmp[N];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">mergesort</span><span class="params">(<span class="type">int</span> l, <span class="type">int</span> r)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (l == r)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="type">int</span> mid = (l + r) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> sum1 = <span class="number">0</span>, sum2 = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">mergesort</span>(l, mid);</span><br><span class="line">    <span class="built_in">mergesort</span>(mid + <span class="number">1</span>, r);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = l; i &lt;= mid; i++)</span><br><span class="line">        sum1 += a[i].x;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = mid + <span class="number">1</span>, j = l; i &lt;= r; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span> (j &lt;= mid &amp;&amp; a[j].x &lt; a[i].x)</span><br><span class="line">        &#123;</span><br><span class="line">            sum1 -= a[j].x;</span><br><span class="line">            sum2 += a[j].x;</span><br><span class="line">            j++;</span><br><span class="line">        &#125;</span><br><span class="line">        ans += <span class="number">1LL</span> * a[i].v * (<span class="number">1LL</span> * a[i].x * (j - l) - sum2 - <span class="number">1LL</span> * a[i].x * (mid - j + <span class="number">1</span>) + sum1);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> i = l, j = mid + <span class="number">1</span>, k = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (i &lt;= mid &amp;&amp; j &lt;= r)</span><br><span class="line">        <span class="keyword">if</span> (a[i].x &lt; a[j].x)</span><br><span class="line">            tmp[k++] = a[i++];</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            tmp[k++] = a[j++];</span><br><span class="line">    <span class="keyword">while</span> (i &lt;= mid)</span><br><span class="line">        tmp[k++] = a[i++];</span><br><span class="line">    <span class="keyword">while</span> (j &lt;= r)</span><br><span class="line">        tmp[k++] = a[j++];</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> p = <span class="number">0</span>; p &lt; k; p++)</span><br><span class="line">        a[l + p] = tmp[p];</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>, &amp;a[i].v, &amp;a[i].x);</span><br><span class="line">    <span class="built_in">sort</span>(a + <span class="number">1</span>, a + n + <span class="number">1</span>);</span><br><span class="line">    <span class="built_in">mergesort</span>(<span class="number">1</span>, n);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>, ans);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-        
-      </div>
-
-         
+<div class="archive-main-card">
+    <div class="archive-top">
+      <div class="main-title-bar">
+        <div class="main-title-dot"></div>
+        <h1 class="article-title">归档</h1>
+      </div>    
     </div>
     
-     
+    
+      
+      
+        
+        <div class="year-line">
+            <div class="year-num">2024</div>
+            <div class="dot-wrapper">
+                <div class="dot"></div>
+            </div>
+            <div class="article-count">1 篇文章</div>
+        </div>
+      
+      <a class="archive-article-link" href="/2024/01/28/The-Method-of-Four-Russians/" title="四毛子算法(The Method of Four Russians)">
+        <div class="date">01-28</div>
+        <div class="line">
+            <div class="dot"></div>
+        </div>
+        <div class="title">
+            <div class="title-inner">
+                
+                    四毛子算法(The Method of Four Russians)
+                
+            </div>
+        </div>
+        <div class="tags">
+            #RMQ #笛卡尔树 #The Method of Four Russians
+        </div>
+      </a>
+    
   </div>
-  
-    
-<nav id="article-nav">
-  <a class="article-nav-btn left "
-    
-      href="/2024/01/28/The-Method-of-Four-Russians/"
-      title="四毛子算法(The Method of Four Russians)"
-     >
-    <i class="fa-solid fa-angle-left"></i>
-    <p class="title-text">
-      
-        四毛子算法(The Method of Four Russians)
-        
-    </p>
-  </a>
-  <a class="article-nav-btn right "
-    
-      href="/2024/01/26/Maximum-Subrectangle-Problem/"
-      title="最大子矩形问题"
-     >
-
-    <p class="title-text">
-      
-        最大子矩形问题
-        
-    </p>
-    <i class="fa-solid fa-angle-right"></i>
-  </a>
-</nav>
-
-
-  
-</article>
-
-
-
-
-
     </div>
     <div id="footer-wrapper">
       <footer id="footer">
