@@ -25,18 +25,25 @@
   
 
   
-  <title>标签: 障碍点法 | 2005ZHW&#39;s Blog</title>
+  <title>[USACO09OCT] Invasion of the Milkweed G | 2005ZHW&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link rel="preload" href="/css/fonts/Roboto-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
   <link rel="preload" href="/css/fonts/Roboto-Bold.ttf" as="font" type="font/ttf" crossorigin="anonymous">
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="2005ZHW&#39;s Blog">
-<meta property="og:url" content="http://2005zhw.github.io/tags/%E9%9A%9C%E7%A2%8D%E7%82%B9%E6%B3%95/index.html">
+  <meta name="description" content="题目描述 DESCRIPTION Farmer John has always done his best to keep the pastures full of luscious, delicious healthy grass for the cows. He has lost the battle, though, as the evil milkweed has attained a f">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[USACO09OCT] Invasion of the Milkweed G">
+<meta property="og:url" content="http://2005zhw.github.io/2024/01/29/USACO09OCT-Invasion-of-the-Milkweed-G/index.html">
 <meta property="og:site_name" content="2005ZHW&#39;s Blog">
+<meta property="og:description" content="题目描述 DESCRIPTION Farmer John has always done his best to keep the pastures full of luscious, delicious healthy grass for the cows. He has lost the battle, though, as the evil milkweed has attained a f">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-29T05:13:55.000Z">
+<meta property="article:modified_time" content="2024-01-31T04:02:12.592Z">
 <meta property="article:author" content="Hervey">
+<meta property="article:tag" content="搜索">
+<meta property="article:tag" content="广度优先搜索">
+<meta property="article:tag" content="洪水填充">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="2005ZHW's Blog" type="application/atom+xml">
@@ -256,44 +263,121 @@
     <div id="content-body">
        
 
-<div class="archive-main-card">
-    <div class="archive-top">
-      <div class="main-title-bar">
-        <div class="main-title-dot"></div>
-        <h1 class="article-title">归档</h1>
-      </div>    
+
+<article id="post-USACO09OCT-Invasion-of-the-Milkweed-G" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  
+    
+   
+  <div class="article-inner">
+    <div class="article-main">
+      <header class="article-header">
+        
+<div class="main-title-bar">
+  <div class="main-title-dot"></div>
+  
+    
+      <h1 class="p-name article-title" itemprop="headline name">
+        [USACO09OCT] Invasion of the Milkweed G
+      </h1>
+    
+  
+</div>
+
+        <div class='meta-info-bar'>
+          <div class="meta-info">
+  <time class="dt-published" datetime="2024-01-29T05:13:55.000Z" itemprop="datePublished">2024-01-29</time>
+</div>
+          <div class="need-seperator meta-info">
+            <div class="meta-cate-flex">
+  
+  <a class="meta-cate-link" href="/categories/USACO/">USACO</a>><a class="meta-cate-link" href="/categories/USACO/%E9%A2%98%E8%A7%A3/">题解</a>
+   
+</div>
+  
+          </div>
+          <div class="wordcount need-seperator meta-info">
+            2.9k 词 
+          </div>
+        </div>
+        
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" rel="tag">广度优先搜索</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%90%9C%E7%B4%A2/" rel="tag">搜索</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%B4%AA%E6%B0%B4%E5%A1%AB%E5%85%85/" rel="tag">洪水填充</a></li></ul>
+
+      </header>
+      <div class="e-content article-entry" itemprop="articleBody">
+        
+          <h2 id="题目描述">题目描述</h2>
+<h3 id="DESCRIPTION">DESCRIPTION</h3>
+<p>Farmer John has always done his best to keep the pastures full of luscious, delicious healthy grass for the cows. He has lost the battle, though, as the evil milkweed has attained a foothold in the northwest part of his farm.</p>
+<p>The pasture, as usual, is partitioned into a rectilinear grid of height $Y$ ($1 \leq Y \leq 100$) and width $X$ ($1 \leq X \leq 100$) with $(1,1)$ being in the lower left corner (i.e., arranged as a normal $X$,$Y$ coordinate grid). The milkweed has initially begun growing at square $(M_x,M_y)$. Each week the milkweed propagates to all non-rocky squares that surround any square it already occupies, as many as eight more squares (both the rectilinear squares and the diagonals). After only one week in those squares, it is ready to move on to more squares.</p>
+<p>Bessie wants to enjoy all the grass she can before the pastures are taken over by milkweed. She wonders how long it can last. If the milkweed is in square $(M_x,M_y)$ at time zero, at what time does it complete its invasion of the pasture (which, for the given input data, will always happen)?</p>
+<p>The pasture is described by a picture with '.'s for grass and '*'s for boulders, like this example with $X=4$ and $Y=3$:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">....</span><br><span class="line">..*.</span><br><span class="line">.**.</span><br></pre></td></tr></table></figure>
+<p>If the milkweed started in the lower left corner (row=$1$, column=$1$), then the map would progress like this:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">    ....  ....  MMM.  MMMM  MMMM</span><br><span class="line">    ..*.  MM*.  MM*.  MM*M  MM*M</span><br><span class="line">    M**.  M**.  M**.  M**.  M**M</span><br><span class="line">week  0    1    2    3    4</span><br></pre></td></tr></table></figure>
+<p>The milkweed has taken over the entire field after $4$ weeks.</p>
+<h3 id="INPUT-FORMAT">INPUT FORMAT</h3>
+<p>Line $1$: Four space-separated integers: $X$, $Y$, $M_x$, and $M_y$</p>
+<p>Lines $2 \dots Y+1$: Line $y+1$ describes row ($Y+2-y$) of the field with $X$ characters (‘.’ for grass and ‘*’ for a boulder)</p>
+<h3 id="OUTPUT-FORMAT">OUTPUT FORMAT</h3>
+<p>Line $1$: A single integer that is the week number when the milkweed takes over the last remaining non-boulder square of the pasture.</p>
+<h3 id="SAMPLE-INPUT">SAMPLE INPUT</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">4 3 1 1 </span><br><span class="line">.... </span><br><span class="line">..*. </span><br><span class="line">.**.</span><br></pre></td></tr></table></figure>
+<h3 id="SAMPLE-OUTPUT">SAMPLE OUTPUT</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">4</span><br></pre></td></tr></table></figure>
+<h2 id="题目大意">题目大意</h2>
+<p>Farmer John一直努力让他的草地充满鲜美多汁的而又健康的牧草。可惜天不从人愿，他在植物大战人类中败下阵来。邪恶的乳草已经在他的农场的西北部份占领了一片立足之地。</p>
+<p>草地像往常一样，被分割成一个高度为 $Y$ ($1 \leq Y \leq 100$), 宽度为 $X$ ($1 \leq X \leq 100$)的直角网格。$(1,1)$ 是左下角的格(也就是说坐标排布跟一般的 $X$ , $Y$ 坐标相同)。乳草一开始占领了格 $(M_x,M_y)$ 。每个星期，乳草传播到已被乳草占领的格子四面八方的每一个没有很多石头的格(包括垂直与水平相邻的和对角在线相邻的格)。1周之后，这些新占领的格又可以把乳草传播到更多的格里面了。</p>
+<p>Bessie想要在草地被乳草完全占领之前尽可能的享用所有的牧草。她很好奇到底乳草要多久才能占领整个草地。如果乳草在0时刻处于格 $(M_x,M_y)$ ，那么会在哪个时刻它们可以完全占领入侵整片草地呢？对给定的数据总是会发生。</p>
+<h2 id="题解">题解</h2>
+<p>洪水填充(广度优先搜索)模板题，但是读入很阴间，读入的坐标系和传统意义上的坐标系颠倒 <s>USACO是这样的</s></p>
+<h2 id="代码实现">代码实现</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> N = <span class="number">100</span> + <span class="number">5</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> dx[] = &#123;<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">0</span>, <span class="number">0</span>&#125;;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> dy[] = &#123;<span class="number">1</span>, <span class="number">0</span>, <span class="number">-1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">-1</span>, <span class="number">1</span>, <span class="number">-1</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Node</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> x, y, s;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> n, m, mx, my;</span><br><span class="line"><span class="type">char</span> a[N][N];</span><br><span class="line"></span><br><span class="line"><span class="type">bool</span> vis[N][N];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">bfs</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    queue&lt;Node&gt; Q;</span><br><span class="line">    Q.<span class="built_in">push</span>((Node)&#123;x, y, <span class="number">0</span>&#125;);</span><br><span class="line">    vis[x][y] = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">while</span> (!Q.<span class="built_in">empty</span>())</span><br><span class="line">    &#123;</span><br><span class="line">        Node u = Q.<span class="built_in">front</span>(), v;</span><br><span class="line">        Q.<span class="built_in">pop</span>();</span><br><span class="line">        ans = u.s;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">8</span>; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            v.x = u.x + dx[i], v.y = u.y + dy[i], v.s = u.s + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span> (a[v.x][v.y] == <span class="string">&#x27;.&#x27;</span> &amp;&amp; !vis[v.x][v.y])</span><br><span class="line">            &#123;</span><br><span class="line">                vis[v.x][v.y] = <span class="literal">true</span>;</span><br><span class="line">                Q.<span class="built_in">push</span>(v);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d%d&quot;</span>, &amp;m, &amp;n, &amp;my, &amp;mx);</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = n; i &gt;= <span class="number">1</span>; i--)</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>; j &lt;= m; j++)</span><br><span class="line">            cin &gt;&gt; a[i][j];</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, <span class="built_in">bfs</span>(mx, my));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+      </div>
+
+         
     </div>
     
-    
-      
-      
-        
-        <div class="year-line">
-            <div class="year-num">2024</div>
-            <div class="dot-wrapper">
-                <div class="dot"></div>
-            </div>
-            <div class="article-count">1 篇文章</div>
-        </div>
-      
-      <a class="archive-article-link" href="/2024/01/26/Maximum-Subrectangle-Problem/" title="最大子矩形问题">
-        <div class="date">01-26</div>
-        <div class="line">
-            <div class="dot"></div>
-        </div>
-        <div class="title">
-            <div class="title-inner">
-                
-                    最大子矩形问题
-                
-            </div>
-        </div>
-        <div class="tags">
-            #悬线法 #障碍点法
-        </div>
-      </a>
-    
+     
   </div>
+  
+    
+<nav id="article-nav">
+  <a class="article-nav-btn left "
+    
+      href="/2024/01/31/USACO08DEC-Secret-Message-G/"
+      title="[USACO08DEC] Secret Message G"
+     >
+    <i class="fa-solid fa-angle-left"></i>
+    <p class="title-text">
+      
+        [USACO08DEC] Secret Message G
+        
+    </p>
+  </a>
+  <a class="article-nav-btn right "
+    
+      href="/2024/01/28/The-Method-of-Four-Russians/"
+      title="四毛子算法(The Method of Four Russians)"
+     >
+
+    <p class="title-text">
+      
+        四毛子算法(The Method of Four Russians)
+        
+    </p>
+    <i class="fa-solid fa-angle-right"></i>
+  </a>
+</nav>
+
+
+  
+</article>
+
+
+
+
+
     </div>
     <div id="footer-wrapper">
       <footer id="footer">
